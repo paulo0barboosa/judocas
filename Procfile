@@ -1,1 +1,1 @@
-web: gunicorn judocas.wsgi --log-file -
+web: gunicorn judocas.wsgi
