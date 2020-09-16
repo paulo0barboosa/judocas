@@ -1,8 +1,1 @@
 venv
-.DS_Store
-.idea
-*.sqlite3
-*pyc
-docs
-favicon.ico
-/favicon.ico

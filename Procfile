@@ -1,1 +1,0 @@
-web: gunicorn judocas.wsgi
