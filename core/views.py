@@ -6,17 +6,15 @@ from .forms import FiliadoForm
 
 
 def home(request):
-    context = {'mensagem' : 'corno'}
-    return render(request, 'core/index.html', context)
+    return render(request, 'core/index.html')
 
 def filiados_cadastrados(request):
     filiados = Filiado.objects.all()
-    form = FiliadoForm()
-    data =  {'filiados':filiados, 'form':form}
-    return render(request, 'core/filiados_cadastrados.html', data)
+    return render(request, 'core/filiados_cadastrados.html', {'filiados':filiados})
 
 def cadastra_filiado(request):
+    # form_struct = FiliadoForm()
     form = FiliadoForm(request.POST or None)
     if form.is_valid():
         form.save()
-    return redirect('core_filiados_cadastrados')
+    return render(request, 'core/cadastro.html', {'form' : form})
