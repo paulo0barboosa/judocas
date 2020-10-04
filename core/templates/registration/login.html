@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}
+
+{% block main %}
+<br>
+{% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+        <p>Os dados inseridos estão incorretos. Por favor, tente novamente.</p>
+    </div>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+        <div class="alert alert-danger" role="alert">
+            <p>Você não tem acesso a essa página. Por favor, faça o login para continuar</p>
+        </div>
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+            <p>Por favor, faça o login para ver esta página</p>
+        </div>
+    {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+    <div class="form-group">
+        <label for="id_username">Usuário</label>
+        <input type="text" class="form-control" id="id_username"  placeholder="Usuário" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="">
+    </div>
+    <div class="form-group">
+        <label for="id_password">Senha</label>
+        <input type="password" class="form-control" id="id_password" placeholder="Senha" name="password" autocomplete="current-password" required="">
+    </div>
+
+    <button type="submit" value="login" class="btn btn-primary">Login</button>
+    <input type="hidden" name="next" value="{{ next }}">
+</form>
+
+{# Assumes you setup the password_reset view in your URLconf #}
+<p><a href="{% url 'password_reset' %}">Esqueceu sua senha?</a></p>
+
+{% endblock %}

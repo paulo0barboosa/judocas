@@ -3,9 +3,11 @@
 
 {% block main %}
 
-<h1><a href="{% url 'core_filiados_cadastrados' %}">Ver Usuários cadastrados</a></h1><br><br>
+{% include 'core/menu.html' %}
 
-<form action="{% url 'core_cadastra_filiado' %}" method="POST">
+<h1><a href="{% url 'core_academias_cadastrados' %}">Ver Academias Cadastradas</a></h1><br><br>
+
+<form action="{% url 'core_cadastra_academia' %}" method="POST">
     {% csrf_token %}
 
     {{ form|bootstrap }}
