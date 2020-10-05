@@ -33,7 +33,7 @@ class Professor(models.Model):
     CPF = CPFField('CPF', unique=True)
     RGNumero = models.CharField(max_length=9)
     RGOrgao = models.CharField(max_length=20)
-    RegistroCBJ = models.CharField(max_length=20)
+    RegistroCBJ = models.AutoField(primary_key=True, unique=True)
     Academia = models.ManyToManyField(Academia)
     Faixa = models.ForeignKey(Faixa, on_delete=models.CASCADE)
     # FaixaDataEntrega = models.DateTimeField(auto_now=True)
