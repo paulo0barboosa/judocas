@@ -6,7 +6,7 @@ from cpf_field.models import CPFField
 
 class Academia(models.Model):
     Nome = models.CharField(max_length=45)
-    CNPJ = models.CharField(max_length=20)
+    CNPJ = models.CharField(max_length=20, unique=True)
     CEP = models.CharField(max_length=20)
     Rua = models.CharField(max_length=50)
     Numero = models.SmallIntegerField()
@@ -20,7 +20,7 @@ class Academia(models.Model):
         return self.Nome
 
 class Faixa(models.Model):
-    FaixaCor = models.CharField(max_length=20, default="Branco")
+    FaixaCor = models.CharField(max_length=20, default="Branca")
     # FaixaDataEntrega = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -34,7 +34,7 @@ class Professor(models.Model):
     RGNumero = models.CharField(max_length=9)
     RGOrgao = models.CharField(max_length=20)
     RegistroCBJ = models.CharField(max_length=20)
-    Academia = models.ForeignKey(Academia, on_delete=models.CASCADE)
+    Academia = models.ManyToManyField(Academia)
     Faixa = models.ForeignKey(Faixa, on_delete=models.CASCADE)
     # FaixaDataEntrega = models.DateTimeField(auto_now=True)
     CEP = models.CharField(max_length=20)
@@ -60,13 +60,13 @@ class Filiado(models.Model):
     CPF = CPFField('CPF', unique=True)
     RGNumero = models.CharField(max_length=9)
     RGOrgao = models.CharField(max_length=20)
-    RegistroCBJ = models.CharField(max_length=20)
+    RegistroCBJ = models.AutoField(primary_key=True, unique=True)
     Academia = models.ForeignKey(Academia, on_delete=models.CASCADE)
     Professor = models.ForeignKey(Professor, on_delete=models.CASCADE)
     Faixa = models.ForeignKey(Faixa, on_delete=models.CASCADE)
     FaixaDataEntrega = models.DateTimeField(auto_now=True)
-    Rua = models.CharField(max_length=50)
     CEP = models.CharField(max_length=20)
+    Rua = models.CharField(max_length=50)
     Numero = models.SmallIntegerField()
     Bairro = models.CharField(max_length=50)
     Estado = models.CharField(max_length=50)
