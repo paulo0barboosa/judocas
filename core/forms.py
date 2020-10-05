@@ -3,8 +3,8 @@ from django.forms import ModelForm
 from localflavor.br.forms import BRZipCodeField, BRStateChoiceField, BRCNPJField
 from .models import Filiado, Professor, Academia
 
-class DateInput(forms.DateInput):
-    input_type = 'date'
+# class DateInput(forms.DateInput):
+#     input_type = 'date'
 
 class FiliadoForm(ModelForm):
     CEP = BRZipCodeField(label='CEP')
@@ -13,10 +13,10 @@ class FiliadoForm(ModelForm):
     class Meta:
         model = Filiado
         fields = '__all__'
-        widgets = {
-            'DataNascimento': DateInput(),
-            'UltimaAnuidade': DateInput()
-        }
+        # widgets = {
+        #     'DataNascimento': DateInput(),
+        #     'UltimaAnuidade': DateInput()
+        # }
 
 class ProfessorForm(ModelForm):
     CEP = BRZipCodeField(label='CEP')
@@ -25,9 +25,9 @@ class ProfessorForm(ModelForm):
     class Meta:
         model = Professor
         fields = '__all__'
-        widgets = {
-            'DataNascimento': DateInput()
-        }
+        # widgets = {
+        #     'DataNascimento': DateInput()
+        # }
 
 class AcademiaForm(ModelForm):
     CEP = BRZipCodeField(label='CEP')
