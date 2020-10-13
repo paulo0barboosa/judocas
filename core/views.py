@@ -13,8 +13,17 @@ def filiados_cadastrados(request):
     filiados = Filiado.objects.all()
     return render(request, 'core/filiados_cadastrados.html', {'filiados':filiados})
 
+# @login_required
+# def cadastra_filiado(request):
+#     # form_struct = FiliadoForm()
+#     form = FiliadoForm(request.POST or None)
+#     if form.is_valid():
+#         form.save()
+#     return render(request, 'core/cadastra_filiado.html', {'form' : form})
+
 @login_required
 def cadastra_filiado(request):
+    # academia = get_object_or_404(Academia)
     # form_struct = FiliadoForm()
     form = FiliadoForm(request.POST or None)
     if form.is_valid():

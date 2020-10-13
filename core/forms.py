@@ -10,6 +10,11 @@ class FiliadoForm(ModelForm):
     CEP = BRZipCodeField(label='CEP')
     Estado = BRStateChoiceField(label='Estado')
 
+    # def __init__(self,*args,**kwargs):
+    #     super (FiliadoForm,self ).__init__(*args,**kwargs) # populates the post
+    #     # self.fields['Academia'].queryset = Filiado.objects.filter(Academia=Academia)
+    #     self.fields['Professor'].queryset = Professor.objects.filter(Academia=Academia)
+
     class Meta:
         model = Filiado
         fields = '__all__'
