@@ -7,7 +7,9 @@ from .views import (
     professores_cadastrados,
     cadastra_professor,
     academias_cadastrados,
-    cadastra_academia
+    cadastra_academia,
+    search_pessoa,
+    search_academia
 )
 
 
@@ -16,6 +18,8 @@ urlpatterns = [
     url(r'^cadastra_filiado/$', cadastra_filiado, name='core_cadastra_filiado'),
     url(r'^filiados/$', filiados_cadastrados, name='core_filiados_cadastrados'),
     url(r'^cadastra_professor/$', cadastra_professor, name='core_cadastra_professor'),
+    path('search_pessoa/', search_pessoa.as_view(), name='search_pessoa'),
+    path('search_academia/', search_academia.as_view(), name='search_academia'),
     url(r'^professores/$', professores_cadastrados, name='core_professores_cadastrados'),
     url(r'^cadastra_academia/$', cadastra_academia, name='core_cadastra_academia'),
     url(r'^academias/$', academias_cadastrados, name='core_academias_cadastrados'),

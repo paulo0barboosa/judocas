@@ -1,0 +1,52 @@
+{% extends 'core/base.html' %}
+
+{% block main %}
+
+{% include 'core/menu.html' %}
+
+{% comment %} <form class="form-inline my-2 my-lg-0" action="{% url 'search_academia' %}" method="get">
+  <input class="form-control  mr-sm-2" type="search" placeholder="Busca" aria-label="Busca" name="q">
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form> {% endcomment %}
+
+<div class="container">
+  <br/>
+	<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+        <form class="card card-sm" action="{% url 'search_academia' %}" method="get">
+            <div class="card-body row no-gutters align-items-center">
+                <div class="col-auto">
+                    <i class="fas fa-search h4 text-body"></i>
+                </div>
+                <div class="col">
+                    <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Busca" aria-label="Busca" name="q">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-lg btn-success" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+<h1>Resultado</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col">CNPJ</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for academia in object_list %}
+        <tr>
+            <td>{{ academia.Nome }}</td>
+            <td>{{ academia.CNPJ }}</td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

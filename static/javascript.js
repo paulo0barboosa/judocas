@@ -1,4 +1,5 @@
-$("#id_CEP").focusout(function(){
+$(document).ready(function() {
+  $("#id_CEP").focusout(function(){
     //Início do Comando AJAX
     $.ajax({
         //O campo URL diz o caminho de onde virá os dados
@@ -24,9 +25,8 @@ $("#id_CEP").focusout(function(){
             $("#id_Numero").focus();
         }
     });
-});
+  });
 
-$(document).ready(function() {
     $('#id_Academia').change(function() {
       var filter = $(this).val();
       $('#id_Professor > option').each(function() {
@@ -37,8 +37,28 @@ $(document).ready(function() {
         }
         $('select').val(filter);
       })
-    })
+    })  
+    
+    // $('#id_ProfessorAluno').change(function() 
+    // {
+    //   if(this.checked != true){
+    //     $('#id_Professor').hide();
+    //     $('#id_UltimaAnuidade').hide();
+    //   } else {
+    //     $('#id_Professor').show();
+    //     $('#id_UltimaAnuidade').show();
+    //   }
+    // });   
 
+    $('#id_ProfessorAluno').on('change', function (e) {
+      if(this.checked != true){
+        $('#id_Professor').parent().parent().hide();
+        $('#id_UltimaAnuidade').parent().parent().hide();
+      } else {
+        $('#id_Professor').parent().parent().show();
+        $('#id_UltimaAnuidade').parent().parent().show();
+      }
+  });
     
   var behavior = function (val) {
     return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00000';

@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import Filiado, Professor, Academia
+from django.views.generic import TemplateView, ListView
+from django.db.models import Q
+from .models import Filiado, Professor, Academia, Pessoa
 from .forms import FiliadoForm, ProfessorForm, AcademiaForm
 # Create your views here.
 
@@ -37,6 +39,33 @@ def cadastra_professor(request):
     if form.is_valid():
         form.save()
     return render(request, 'core/cadastra_professor.html', {'form' : form})
+
+# @login_required
+class search_pessoa(ListView):
+    model = Pessoa
+    template_name = 'core/search_pessoa.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if not query :
+            query = ""
+        object_list = Pessoa.objects.filter(
+            Q(Nome__icontains=query) | Q(CPF__icontains=query)  | Q(RGNumero__icontains=query)  | Q(RegistroCBJ__icontains=query)
+        )
+        return object_list
+
+class search_academia(ListView):
+    model = Academia
+    template_name = 'core/search_academia.html'
+
+    def get_queryset(self): # new
+        query = self.request.GET.get('q')
+        if not query :
+            query = ""
+        object_list = Academia.objects.filter(
+            Q(Nome__icontains=query) | Q(CNPJ__icontains=query)
+        )
+        return object_list
 
 @login_required
 def professores_cadastrados(request):
