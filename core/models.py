@@ -36,7 +36,7 @@ class Pessoa(models.Model):
     CPF = CPFField('CPF', unique=True)
     RGNumero = models.CharField(max_length=12, unique=True)
     RGOrgao = models.CharField(max_length=20)
-    RegistroCBJ = models.AutoField(primary_key=True, unique=True)
+    RegistroCBJ = models.AutoField(primary_key=True, unique=True, editable=False)
     Faixa = models.ForeignKey(Faixa, on_delete=models.CASCADE)
     FaixaDataEntrega = models.DateTimeField(auto_now=True)
     CEP = models.CharField(max_length=20)
@@ -71,6 +71,7 @@ class Professor(Pessoa):
         return self.Nome
 
 class Filiado(Pessoa):
+    Tipo = "Professor"
     # IDFiliado = models.AutoField(primary_key=True)
     # Nome = models.CharField(max_length=45)
     # DataNascimento = models.DateField()

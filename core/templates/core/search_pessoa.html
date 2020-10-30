@@ -45,7 +45,7 @@
   <tbody>
     {% for pessoa in object_list %}
         <tr>
-            <td>{{ pessoa.Nome }}</td>
+            <td><a href="{% url 'core_update_pessoa' pessoa.RegistroCBJ %}">{{ pessoa.Nome }}</a></td>
             <td>{{ pessoa.CPF }}</td>
             <td>{{ pessoa.RGNumero }}</td>
             <td>{{ pessoa.RegistroCBJ }}</td>

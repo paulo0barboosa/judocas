@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+{% load bootstrap %}
+
+{% block main %}
+
+{% include 'core/menu.html' %}
+
+<h2>Academia: {{academia.Nome}}</h2>
+
+<form action="{% url 'core_update_academia' academia.IDAcademia  %}" method="POST">
+    {% csrf_token %}
+
+    {{ form|bootstrap }}
+
+    <button type="submit" class="btn btn-primary">Atualizar</button>
+</form>
+
+{% endblock %}
