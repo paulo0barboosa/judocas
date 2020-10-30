@@ -42,7 +42,7 @@
   <tbody>
     {% for academia in object_list %}
         <tr>
-            <td>{{ academia.Nome }}</td>
+            <td><a href="{% url 'core_update_academia' academia.IDAcademia %}">{{ academia.Nome }}</a></td>
             <td>{{ academia.CNPJ }}</td>
         </tr>
     {% endfor %}

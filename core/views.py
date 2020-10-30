@@ -33,6 +33,34 @@ def cadastra_filiado(request):
     return render(request, 'core/cadastra_filiado.html', {'form' : form})
 
 @login_required
+def update_pessoa(request, RegistroCBJ):
+    data = {}
+    # pessoa = Pessoa.objects.get(RegistroCBJ=RegistroCBJ)
+
+    try:
+        pessoa = Filiado.objects.get(RegistroCBJ=RegistroCBJ)
+        form = FiliadoForm(request.POST or None, instance=pessoa)
+    except Filiado.DoesNotExist:
+        pessoa = Professor.objects.get(RegistroCBJ=RegistroCBJ)   
+        form = ProfessorForm(request.POST or None, instance=pessoa)
+
+    # professor = Professor.objects.get(RegistroCBJ=RegistroCBJ)
+    # filiado = Filiado.objects.get(RegistroCBJ=RegistroCBJ)
+
+    # if professor != 
+
+    # form = PessoaForm(request.POST or None, instance=pessoa)
+    data['pessoa'] = pessoa
+    data['form'] = form
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect("search_pessoa")
+    # else:
+    return render(request, 'core/update_pessoa.html', data)
+
+@login_required
 def cadastra_professor(request):
     # form_struct = FiliadoForm()
     form = ProfessorForm(request.POST or None)
@@ -84,3 +112,18 @@ def cadastra_academia(request):
 def academias_cadastrados(request):
     academias = Academia.objects.all()
     return render(request, 'core/academias_cadastrados.html', {'academias':academias})
+
+@login_required
+def update_academia(request, IDAcademia):
+    data = {}
+    academia = Academia.objects.get(IDAcademia=IDAcademia)
+    form = AcademiaForm(request.POST or None, instance=academia)
+    data['academia'] = academia
+    data['form'] = form
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect("search_academia")
+    # else:
+    return render(request, 'core/update_academia.html', data)

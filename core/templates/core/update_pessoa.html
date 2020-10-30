@@ -16,15 +16,17 @@
 
         {% include 'core/menu.html' %}
 
-        <h1><a href="{% url 'core_professores_cadastrados' %}">Ver Professores cadastrados</a></h1><br><br>
 
-        <form action="{% url 'core_cadastra_professor' %}" method="POST">
+        <h2>Pessoa: {{pessoa.Nome}}</h2>
+
+        <form action="{% url 'core_update_pessoa' pessoa.RegistroCBJ  %}" method="POST">
             {% csrf_token %}
 
             {{ form|bootstrap }}
 
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <button type="submit" class="btn btn-primary">Atualizar</button>
         </form>
+
   </div>
     
   <script src="{% static "jquery.js" %}"></script>
