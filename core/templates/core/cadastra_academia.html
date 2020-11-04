@@ -5,7 +5,8 @@
 
 {% include 'core/menu.html' %}
 
-<h1><a href="{% url 'core_academias_cadastrados' %}">Ver Academias Cadastradas</a></h1><br><br>
+{% comment %} <h1><a href="{% url 'core_academias_cadastrados' %}">Ver Academias Cadastradas</a></h1><br><br> {% endcomment %}
+<br><h1>Cadastro de Academia</h1><br>
 
 <form action="{% url 'core_cadastra_academia' %}" method="POST">
     {% csrf_token %}

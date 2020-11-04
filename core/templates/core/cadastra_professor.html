@@ -16,7 +16,8 @@
 
         {% include 'core/menu.html' %}
 
-        <h1><a href="{% url 'core_professores_cadastrados' %}">Ver Professores cadastrados</a></h1><br><br>
+        {% comment %} <h1><a href="{% url 'core_professores_cadastrados' %}">Ver Professores cadastrados</a></h1><br><br> {% endcomment %}
+        <br><h1>Cadastro de Professor</h1><br>
 
         <form action="{% url 'core_cadastra_professor' %}" method="POST">
             {% csrf_token %}

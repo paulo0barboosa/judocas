@@ -5,7 +5,8 @@
 
 {% include 'core/menu.html' %}
 
-<h1><a href="{% url 'core_filiados_cadastrados' %}">Ver Filiados Cadastrados</a></h1><br><br>
+{% comment %} <h1><a href="{% url 'core_filiados_cadastrados' %}">Ver Filiados Cadastrados</a></h1><br><br> {% endcomment %}
+<br><h1>Cadastro de Filiado</h1><br>
 
 <form action="{% url 'core_cadastra_filiado' %}" method="POST">
     {% csrf_token %}
