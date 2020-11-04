@@ -25,8 +25,9 @@
             {{ form|bootstrap }}
 
             <button type="submit" class="btn btn-primary">Atualizar</button>
+            <div class="btn-danger btn" role="alert"><a style="color: white" href="{% url 'core_delete_pessoa' pessoa.RegistroCBJ %}">Deletar</a></div>
         </form>
-
+        <br>
   </div>
     
   <script src="{% static "jquery.js" %}"></script>
