@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from localflavor.br.forms import BRZipCodeField, BRStateChoiceField, BRCNPJField
+from localflavor.br.forms import BRZipCodeField, BRCNPJField
 from .models import Filiado, Professor, Academia
 
 # class DateInput(forms.DateInput):
@@ -8,7 +8,7 @@ from .models import Filiado, Professor, Academia
 
 class FiliadoForm(ModelForm):
     CEP = BRZipCodeField(label='CEP')
-    Estado = BRStateChoiceField(label='Estado')
+    # Estado = BRStateChoiceField(label='Estado')
 
     # def __init__(self,*args,**kwargs):
     #     super (FiliadoForm,self ).__init__(*args,**kwargs) # populates the post
@@ -25,7 +25,7 @@ class FiliadoForm(ModelForm):
 
 class ProfessorForm(ModelForm):
     CEP = BRZipCodeField(label='CEP')
-    Estado = BRStateChoiceField(label='Estado')
+    # Estado = BRStateChoiceField(label='Estado')
 
     class Meta:
         model = Professor
@@ -36,7 +36,7 @@ class ProfessorForm(ModelForm):
 
 class AcademiaForm(ModelForm):
     CEP = BRZipCodeField(label='CEP')
-    Estado = BRStateChoiceField(label='Estado')
+    # Estado = BRStateChoiceField(label='Estado')
     CNPJ = BRCNPJField(label='CNPJ')
 
     class Meta:
