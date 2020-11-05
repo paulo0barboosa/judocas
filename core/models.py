@@ -54,7 +54,7 @@ class Pessoa(models.Model):
 
 class Professor(Pessoa):
     # IDFiliado = models.AutoField(primary_key=True)    
-    Academia = models.ManyToManyField(Academia)
+    Academia = models.ForeignKey(Academia, on_delete=models.CASCADE)
     Salario = models.DecimalField(max_digits=7,decimal_places=2)
     ProfessorAluno = models.BooleanField(default=False)
     Professor = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True)
