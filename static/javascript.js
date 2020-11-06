@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $("#id_CEP").focusout(function(){
+  $("#id_CEP").focusout(function(){ // mascara para campos de CEP
     //Início do Comando AJAX
     $.ajax({
         //O campo URL diz o caminho de onde virá os dados
@@ -26,31 +26,8 @@ $(document).ready(function() {
         }
     });
   });
-
-    // $('#id_Academia').change(function() {
-    //   var filter = $(this).val();
-    //   $('#id_Professor > option').each(function() {
-    //     if ($(this).val() == filter) {
-    //       $(this).show();
-    //     } else {
-    //       $(this).hide();
-    //     }
-    //     $('select').val(filter);
-    //   })
-    // })
     
-    // $('#id_ProfessorAluno').change(function() 
-    // {
-    //   if(this.checked != true){
-    //     $('#id_Professor').hide();
-    //     $('#id_UltimaAnuidade').hide();
-    //   } else {
-    //     $('#id_Professor').show();
-    //     $('#id_UltimaAnuidade').show();
-    //   }
-    // });   
-    
-  var behavior = function (val) {
+  var behavior = function (val) { // mascara de telefone
     return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00000';
   },
   options = {

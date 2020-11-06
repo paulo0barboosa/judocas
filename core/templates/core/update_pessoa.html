@@ -21,81 +21,78 @@
 <script src="{% static "jquery.js" %}"></script>
 <script>
   $(document).ready(function() {
-    if($('#id_ProfessorAluno').length){
-      function carrega_prof(){
-        var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_cities` view
+    if($('#id_ProfessorAluno').length){ // se for um professor, as funcoes abaixo serao executadas
+      function carrega_prof(){ //funcao para atualizar os professores dependendo da academia selecionada
+        var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_professores` view
         var academiaId = $("#id_Academia").val();  // get the selected country ID from the HTML input
 
         $.ajax({                       // initialize an AJAX request
-            url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+            url: url,                    // set the url of the request
             data: {
-                'Academia': academiaId       // add the country id to the GET parameters
+                'Academia': academiaId       // add the academiaId id to the GET parameters
             },
-            success: function (data) {   // `data` is the return of the `load_cities` view function
-                $("#id_Professor").html(data);  // replace the contents of the city input with the data that came from the server
+            success: function (data) {   // `data` is the return of the `load_professores` view function
+                $("#id_Professor").html(data);  // replace the contents of the professor input with the data that came from the server
             }
         });
 
         setTimeout(function() {
-          $("#id_Professor > option").each(function() {
+          $("#id_Professor > option").each(function() { // se for um professor aluno, ele nao pode se selecionar como professor
             if($(this).text() ==  $("#id_Nome").val()){
-              $(this).hide();
+              $(this).hide(); // esconde para nao selecionar um auto professor
             } else{
-              $(this).attr("selected","selected");
+              $(this).attr("selected","selected"); // seleciona qualquer outro professor da academia para que sua auto selecao desapareca
             }
           });
         }, 200);
       };
 
-      setTimeout(function(){carrega_prof()},200);
+      setTimeout(function(){carrega_prof()},200); // aplica a funcao ao carregar a pagina
 
-      //if( $('#id_ProfessorAluno').length ){
-      if($('#id_ProfessorAluno').is(":checked")){
-        // Uncheck
-        // $("#checkbox").prop("checked", false);
+      if($('#id_ProfessorAluno').is(":checked")){ // ao carregar a pagina, verifica se e um professor aluno
       } else{
         $('#id_Professor').parent().parent().hide();
         $('#id_UltimaAnuidade').parent().parent().hide();
       }
       //} 
 
-      $('#id_ProfessorAluno').on('change', function (e) {
-        if(this.checked != true){
+      $('#id_ProfessorAluno').on('change', function (e) { // monitora o professor aluno, ao desmarcar ou marcar o botao
+        if(this.checked != true){ // se nao estiver marcado, some com os campos do professor aluno
           $('#id_Professor').parent().parent().hide();
           $('#id_UltimaAnuidade').parent().parent().hide();
-          $("#id_Professor").html("<option value selected>---------</option>");
-        } else {
-          carrega_prof();
+          $("#id_Professor").html("<option value selected>---------</option>"); //limpa os filtros do professor
+        } else { // se estiver marcado, os campos do professor aluno reaparecem
+          carrega_prof(); // aplica os filtros do professor
           $('#id_Professor').parent().parent().show();
           $('#id_UltimaAnuidade').parent().parent().show();
         }
       });
 
-      $("#id_Academia").change(function () {
-        if($('#id_ProfessorAluno').is(":checked")){            
+      $("#id_Academia").change(function () { // ao mudar a academia selecionada, os filtros para o professor sao aplicados novamente
+        if($('#id_ProfessorAluno').is(":checked")){    // se estiver marcado, aplica os filtros         
           carrega_prof();
         } else{
-          $("#id_Professor").html("<option value selected>---------</option>");
+          $("#id_Professor").html("<option value selected>---------</option>"); // se nao estiver marcado, reseta os filtros
         };
       });
-    } else{
-      function carrega_prof(){
-        var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_cities` view
-        var academiaId = $("#id_Academia").val();  // get the selected country ID from the HTML input
+    } else{ // se for um aluno, as funcoes abaixo serao carregadas
+      function carrega_prof(){ // funcao para aplicar os filtros da academia selecionada ao professor
+        var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_professores` view
+        var academiaId = $("#id_Academia").val();  // get the selected academia ID from the HTML input
 
         $.ajax({                       // initialize an AJAX request
-            url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+            url: url,                    // set the url of the request
             data: {
-                'Academia': academiaId       // add the country id to the GET parameters
+                'Academia': academiaId       // add the academia id to the GET parameters
             },
-            success: function (data) {   // `data` is the return of the `load_cities` view function
-                $("#id_Professor").html(data);  // replace the contents of the city input with the data that came from the server
+            success: function (data) {   // `data` is the return of the `load_professores` view function
+                $("#id_Professor").html(data);  // replace the contents of the professor input with the data that came from the server
             }
         });
       };
-      setTimeout(function(){carrega_prof()},200);
+      setTimeout(function(){carrega_prof()},200); // aplica os filtros do professor ao carregar a pagina
 
-      $("#id_Academia").change(function () {
+      $("#id_Academia").change(function () { // ao mudar a academia selecinada, o professor e filtrado
         carrega_prof();
       });
     };
