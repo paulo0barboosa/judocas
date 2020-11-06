@@ -35,13 +35,8 @@
       });
     };
 
-    setTimeout(function(){carrega_prof()},200); // aplica a funcao ao carregar a pagina
-
-    if($('#id_ProfessorAluno').is(":checked")){ // ao carregar a pagina, se este campo não estiver marcado, ele esconde os outros dois campos
-    } else{
-      $('#id_Professor').parent().parent().hide();
-      $('#id_UltimaAnuidade').parent().parent().hide();
-    };
+    $('#id_Professor').parent().parent().hide(); // ao carregar a pagina ele esconde os dois campos
+    $('#id_UltimaAnuidade').parent().parent().hide();
 
     $('#id_ProfessorAluno').on('change', function (e) { // ao mudar o status do botao de professor aluno, os dois campos se escondem ou reaparecem
       if(this.checked != true){
