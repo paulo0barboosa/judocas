@@ -71,7 +71,6 @@ class Professor(Pessoa):
         return self.Nome
 
 class Filiado(Pessoa):
-    Tipo = "Professor"
     # IDFiliado = models.AutoField(primary_key=True)
     # Nome = models.CharField(max_length=45)
     # DataNascimento = models.DateField()

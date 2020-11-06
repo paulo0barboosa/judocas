@@ -1,0 +1,6 @@
+{% comment %} <option value="">---------</option> {% endcomment %}
+{% for professor in professores %}
+  {% comment %} {% if pessoa.RegistroCBJ !=  professor.RegistroCBJ %} {% endcomment %}
+    <option value="{{ professor.RegistroCBJ }}">{{ professor.Nome }}</option>
+  {% comment %} {% endif %}:] {% endcomment %}
+{% endfor %}

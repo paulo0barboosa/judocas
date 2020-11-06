@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, ListView
 from django.db.models import Q
 from .models import Filiado, Professor, Academia, Pessoa
-from .forms import FiliadoForm, ProfessorForm, AcademiaForm
+from .forms import FiliadoForm, UpdateFiliadoForm, ProfessorForm, UpdateProfessorForm, AcademiaForm
 
 
 def home(request):
@@ -36,6 +36,10 @@ def cadastra_academia(request):
         return redirect("core_cadastra_academia")
     return render(request, 'core/cadastra_academia.html', {'form' : form})
 
+def load_professores(request):
+    Academia_id = request.GET.get('Academia')
+    professores = Professor.objects.filter(Academia_id=Academia_id).order_by('Nome')
+    return render(request, 'core/professor_dropdown_list.html', {'professores': professores})
 
 # -------------- BUSCA --------------
 class search_pessoa(ListView):
@@ -72,10 +76,10 @@ def update_pessoa(request, RegistroCBJ):
 
     try:
         pessoa = Filiado.objects.get(RegistroCBJ=RegistroCBJ)
-        form = FiliadoForm(request.POST or None, instance=pessoa)
+        form = UpdateFiliadoForm(request.POST or None, instance=pessoa)
     except Filiado.DoesNotExist:
         pessoa = Professor.objects.get(RegistroCBJ=RegistroCBJ)   
-        form = ProfessorForm(request.POST or None, instance=pessoa)
+        form = UpdateProfessorForm(request.POST or None, instance=pessoa)
 
     data['pessoa'] = pessoa
     data['form'] = form

@@ -13,7 +13,8 @@ from .views import (
     update_pessoa,
     update_academia,
     delete_pessoa,
-    delete_academia
+    delete_academia,
+    load_professores
 )
 
 
@@ -29,6 +30,8 @@ urlpatterns = [
     path('search_academia/', search_academia.as_view(), name='search_academia'),
     url(r'^delete_pessoa/(?P<RegistroCBJ>\d+)/$', delete_pessoa, name='core_delete_pessoa'),
     url(r'^delete_academia/(?P<IDAcademia>\d+)/$', delete_academia, name='core_delete_academia'),
+
+    path('ajax/load_professores/', load_professores, name='ajax_load_professores'),
     # url(r'^professores/$', professores_cadastrados, name='core_professores_cadastrados'),
     # url(r'^academias/$', academias_cadastrados, name='core_academias_cadastrados'),
     # url(r'^filiados/$', filiados_cadastrados, name='core_filiados_cadastrados'),
