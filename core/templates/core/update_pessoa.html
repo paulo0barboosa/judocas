@@ -6,7 +6,6 @@
 
 {% include 'core/menu.html' %}
 
-<br>
 <h2>Pessoa: {{pessoa.Nome}}</h2>
 
 <form action="{% url 'core_update_pessoa' pessoa.RegistroCBJ  %}" method="POST" id="pessoaForm" data-professores-url="{% url 'ajax_load_professores' %}">
@@ -17,8 +16,6 @@
     <button type="submit" class="btn btn-primary">Atualizar</button>
     <div class="btn-danger btn" role="alert"><a style="color: white" href="{% url 'core_delete_pessoa' pessoa.RegistroCBJ %}">Deletar</a></div>
 </form>
-<br>
-<div class="hide" id="optionHolder"></div>
 <br>
 
 <script src="{% static "jquery.js" %}"></script>
@@ -46,17 +43,11 @@
                 $(this).hide();
               }
             });
-          }, 100);
+          }, 50);
       };
-    }, 100);
-    //setInterval(function() {
-    $('#id_Professor').parent().parent().change(function () {
+    }, 50);
+    setInterval(function() {
       //setTimeout(function() {
-      $("#id_Professor > option").each(function() {
-        if($(this).text() ==  $("#id_Nome").val()){
-          $(this).hide();
-        }
-      });
       //}, 50);
       if($("#id_Professor").parent().parent().css("display") != "none"){
         $("#id_Academia").change(function () {
@@ -72,29 +63,44 @@
                     $("#id_Professor").html(data);  // replace the contents of the city input with the data that came from the server
                 }
             });
-
+            setTimeout(function() {
+              $("#id_Professor > option").each(function() {
+                if($(this).text() ==  $("#id_Nome").val()){
+                  $(this).hide();
+                }
+              });
+            }, 50);
 
         });
       } else{
         $('#id_ProfessorAluno').on('change', function (e) {
-          if(this.checked == true){
-            var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_cities` view
-            var academiaId = $("#id_Academia").val();  // get the selected country ID from the HTML input
+          setTimeout(function() {
+            if(this.checked == true){
+              var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_cities` view
+              var academiaId = $("#id_Academia").val();  // get the selected country ID from the HTML input
 
-            $.ajax({                       // initialize an AJAX request
-                url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
-                data: {
-                    'Academia': academiaId       // add the country id to the GET parameters
-                },
-                success: function (data) {   // `data` is the return of the `load_cities` view function
-                    $("#id_Professor").html(data);  // replace the contents of the city input with the data that came from the server
-                }
-            });
-          }
+              $.ajax({                       // initialize an AJAX request
+                  url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+                  data: {
+                      'Academia': academiaId       // add the country id to the GET parameters
+                  },
+                  success: function (data) {   // `data` is the return of the `load_cities` view function
+                      $("#id_Professor").html(data);  // replace the contents of the city input with the data that came from the server
+                  }
+              });
+
+              setTimeout(function() {
+                $("#id_Professor > option").each(function() {
+                  if($(this).text() ==  $("#id_Nome").val()){
+                    $(this).hide();
+                  }
+                });
+              }, 50);
+            }
+          }, 50);
         });
       };
-    //}, 100);
-    });
+    }, 100);
   });
 </script>
 {% endblock %}
