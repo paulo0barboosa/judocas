@@ -21,86 +21,84 @@
 <script src="{% static "jquery.js" %}"></script>
 <script>
   $(document).ready(function() {
-    setTimeout(function() {
-      if($("#id_Professor").parent().parent().css("display") != "none"){
-        
-            var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_cities` view
-            var academiaId = $("#id_Academia").val();  // get the selected country ID from the HTML input
+    if($('#id_ProfessorAluno').length){
+      function carrega_prof(){
+        var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_cities` view
+        var academiaId = $("#id_Academia").val();  // get the selected country ID from the HTML input
 
-            $.ajax({                       // initialize an AJAX request
-                url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
-                data: {
-                    'Academia': academiaId       // add the country id to the GET parameters
-                },
-                success: function (data) {   // `data` is the return of the `load_cities` view function
-                    $("#id_Professor").html(data);  // replace the contents of the city input with the data that came from the server
-                }
-            });
-
-          setTimeout(function() {
-            $("#id_Professor > option").each(function() {
-              if($(this).text() ==  $("#id_Nome").val()){
-                $(this).hide();
-              }
-            });
-          }, 50);
-      };
-    }, 50);
-    setInterval(function() {
-      //setTimeout(function() {
-      //}, 50);
-      if($("#id_Professor").parent().parent().css("display") != "none"){
-        $("#id_Academia").change(function () {
-            var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_cities` view
-            var academiaId = $(this).val();  // get the selected country ID from the HTML input
-
-            $.ajax({                       // initialize an AJAX request
-                url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
-                data: {
-                    'Academia': academiaId       // add the country id to the GET parameters
-                },
-                success: function (data) {   // `data` is the return of the `load_cities` view function
-                    $("#id_Professor").html(data);  // replace the contents of the city input with the data that came from the server
-                }
-            });
-            setTimeout(function() {
-              $("#id_Professor > option").each(function() {
-                if($(this).text() ==  $("#id_Nome").val()){
-                  $(this).hide();
-                }
-              });
-            }, 50);
-
-        });
-      } else{
-        $('#id_ProfessorAluno').on('change', function (e) {
-          setTimeout(function() {
-            if(this.checked == true){
-              var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_cities` view
-              var academiaId = $("#id_Academia").val();  // get the selected country ID from the HTML input
-
-              $.ajax({                       // initialize an AJAX request
-                  url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
-                  data: {
-                      'Academia': academiaId       // add the country id to the GET parameters
-                  },
-                  success: function (data) {   // `data` is the return of the `load_cities` view function
-                      $("#id_Professor").html(data);  // replace the contents of the city input with the data that came from the server
-                  }
-              });
-
-              setTimeout(function() {
-                $("#id_Professor > option").each(function() {
-                  if($(this).text() ==  $("#id_Nome").val()){
-                    $(this).hide();
-                  }
-                });
-              }, 50);
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+            data: {
+                'Academia': academiaId       // add the country id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_Professor").html(data);  // replace the contents of the city input with the data that came from the server
             }
-          }, 50);
+        });
+
+        setTimeout(function() {
+          $("#id_Professor > option").each(function() {
+            if($(this).text() ==  $("#id_Nome").val()){
+              $(this).hide();
+            } else{
+              $(this).attr("selected","selected");
+            }
+          });
+        }, 200);
+      };
+
+      setTimeout(function(){carrega_prof()},200);
+
+      //if( $('#id_ProfessorAluno').length ){
+      if($('#id_ProfessorAluno').is(":checked")){
+        // Uncheck
+        // $("#checkbox").prop("checked", false);
+      } else{
+        $('#id_Professor').parent().parent().hide();
+        $('#id_UltimaAnuidade').parent().parent().hide();
+      }
+      //} 
+
+      $('#id_ProfessorAluno').on('change', function (e) {
+        if(this.checked != true){
+          $('#id_Professor').parent().parent().hide();
+          $('#id_UltimaAnuidade').parent().parent().hide();
+          $("#id_Professor").html("<option value selected>---------</option>");
+        } else {
+          carrega_prof();
+          $('#id_Professor').parent().parent().show();
+          $('#id_UltimaAnuidade').parent().parent().show();
+        }
+      });
+
+      $("#id_Academia").change(function () {
+        if($('#id_ProfessorAluno').is(":checked")){            
+          carrega_prof();
+        } else{
+          $("#id_Professor").html("<option value selected>---------</option>");
+        };
+      });
+    } else{
+      function carrega_prof(){
+        var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_cities` view
+        var academiaId = $("#id_Academia").val();  // get the selected country ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+            data: {
+                'Academia': academiaId       // add the country id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_Professor").html(data);  // replace the contents of the city input with the data that came from the server
+            }
         });
       };
-    }, 100);
+      setTimeout(function(){carrega_prof()},200);
+
+      $("#id_Academia").change(function () {
+        carrega_prof();
+      });
+    };
   });
 </script>
 {% endblock %}

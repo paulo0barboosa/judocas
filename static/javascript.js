@@ -49,27 +49,6 @@ $(document).ready(function() {
     //     $('#id_UltimaAnuidade').show();
     //   }
     // });   
-
-    if( $('#id_ProfessorAluno').length )         // use this if you are using id to check
-    {
-        if($('#id_ProfessorAluno').is(":checked")){
-          // Uncheck
-          // $("#checkbox").prop("checked", false);
-        } else{
-          $('#id_Professor').parent().parent().hide();
-          $('#id_UltimaAnuidade').parent().parent().hide();
-        }
-    } 
-
-    $('#id_ProfessorAluno').on('change', function (e) {
-      if(this.checked != true){
-        $('#id_Professor').parent().parent().hide();
-        $('#id_UltimaAnuidade').parent().parent().hide();
-      } else {
-        $('#id_Professor').parent().parent().show();
-        $('#id_UltimaAnuidade').parent().parent().show();
-      }
-  });
     
   var behavior = function (val) {
     return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00000';
