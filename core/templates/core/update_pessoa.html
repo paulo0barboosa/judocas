@@ -47,9 +47,9 @@
         }, 200);
       };
 
-      setTimeout(function(){carrega_prof()},200); // aplica a funcao ao carregar a pagina
 
       if($('#id_ProfessorAluno').is(":checked")){ // ao carregar a pagina, verifica se e um professor aluno
+        setTimeout(function(){carrega_prof()},200); // aplica a funcao ao carregar a pagina
       } else{
         $('#id_Professor').parent().parent().hide();
         $('#id_UltimaAnuidade').parent().parent().hide();
