@@ -7,18 +7,17 @@ from .models import Filiado, Professor, Academia, Pessoa
 from .forms import FiliadoForm, UpdateFiliadoForm, ProfessorForm, UpdateProfessorForm, AcademiaForm
 
 
-def home(request):
+def home(request): # pagina inicial
     return render(request, 'core/index.html')
 
-
 # -------------- CADASTRO --------------
-@login_required
+@login_required # esta marcacao indica que a funcao so sera executada se o usuario estiver logado
 def cadastra_filiado(request):
-    form = FiliadoForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect("core_cadastra_filiado")
-    return render(request, 'core/cadastra_filiado.html', {'form' : form})
+    form = FiliadoForm(request.POST or None) # pega a funcao de formulario do forms.py
+    if form.is_valid(): # valida o formulario
+        form.save() # se estiver tudo certo, ele salva os dados do formulario no banco de dados
+        return redirect("core_cadastra_filiado") # da um refresh na pagina
+    return render(request, 'core/cadastra_filiado.html', {'form' : form}) 
 
 @login_required
 def cadastra_professor(request):
@@ -36,7 +35,7 @@ def cadastra_academia(request):
         return redirect("core_cadastra_academia")
     return render(request, 'core/cadastra_academia.html', {'form' : form})
 
-def load_professores(request):
+def load_professores(request): #funcao para carregar os professores que trabalham na academia selecionada
     Academia_id = request.GET.get('Academia')
     professores = Professor.objects.filter(Academia_id=Academia_id).order_by('Nome')
     return render(request, 'core/professor_dropdown_list.html', {'professores': professores})
@@ -46,7 +45,7 @@ class search_pessoa(ListView):
     model = Pessoa
     template_name = 'core/search_pessoa.html'
 
-    def get_queryset(self):
+    def get_queryset(self): # funcao para aplicar os filtros de busca
         query = self.request.GET.get('q')
         if not query :
             query = ""
@@ -74,10 +73,10 @@ class search_academia(ListView):
 def update_pessoa(request, RegistroCBJ):
     data = {}
 
-    try:
+    try: # se o RegistroCBJ estiver presente dentro da classe filiado, o request e de um filiado
         pessoa = Filiado.objects.get(RegistroCBJ=RegistroCBJ)
         form = UpdateFiliadoForm(request.POST or None, instance=pessoa)
-    except Filiado.DoesNotExist:
+    except Filiado.DoesNotExist: # caso contrario e um professor
         pessoa = Professor.objects.get(RegistroCBJ=RegistroCBJ)   
         form = UpdateProfessorForm(request.POST or None, instance=pessoa)
 
@@ -130,21 +129,3 @@ def delete_academia(request, IDAcademia):
         return redirect("search_academia")
     # else:
     return render(request, 'core/delete_academia.html', {'academia': academia})
-
-
-# -------------- LISTAGEM --------------
-
-# @login_required
-# def filiados_cadastrados(request):
-#     filiados = Filiado.objects.all()
-#     return render(request, 'core/filiados_cadastrados.html', {'filiados':filiados})
-
-# @login_required
-# def professores_cadastrados(request):
-#     professores = Professor.objects.all()
-#     return render(request, 'core/professores_cadastrados.html', {'professores':professores})
-
-# @login_required
-# def academias_cadastrados(request):
-#     academias = Academia.objects.all()
-#     return render(request, 'core/academias_cadastrados.html', {'academias':academias})
