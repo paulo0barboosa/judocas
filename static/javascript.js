@@ -27,17 +27,17 @@ $(document).ready(function() {
     });
   });
 
-    $('#id_Academia').change(function() {
-      var filter = $(this).val();
-      $('#id_Professor > option').each(function() {
-        if ($(this).val() == filter) {
-          $(this).show();
-        } else {
-          $(this).hide();
-        }
-        $('select').val(filter);
-      })
-    })  
+    // $('#id_Academia').change(function() {
+    //   var filter = $(this).val();
+    //   $('#id_Professor > option').each(function() {
+    //     if ($(this).val() == filter) {
+    //       $(this).show();
+    //     } else {
+    //       $(this).hide();
+    //     }
+    //     $('select').val(filter);
+    //   })
+    // })
     
     // $('#id_ProfessorAluno').change(function() 
     // {
@@ -49,6 +49,17 @@ $(document).ready(function() {
     //     $('#id_UltimaAnuidade').show();
     //   }
     // });   
+
+    if( $('#id_ProfessorAluno').length )         // use this if you are using id to check
+    {
+        if($('#id_ProfessorAluno').is(":checked")){
+          // Uncheck
+          // $("#checkbox").prop("checked", false);
+        } else{
+          $('#id_Professor').parent().parent().hide();
+          $('#id_UltimaAnuidade').parent().parent().hide();
+        }
+    } 
 
     $('#id_ProfessorAluno').on('change', function (e) {
       if(this.checked != true){

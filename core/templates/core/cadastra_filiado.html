@@ -8,7 +8,7 @@
 {% comment %} <h1><a href="{% url 'core_filiados_cadastrados' %}">Ver Filiados Cadastrados</a></h1><br><br> {% endcomment %}
 <br><h1>Cadastro de Filiado</h1><br>
 
-<form action="{% url 'core_cadastra_filiado' %}" method="POST">
+<form action="{% url 'core_cadastra_filiado' %}" method="POST" id="pessoaForm" data-professores-url="{% url 'ajax_load_professores' %}">
     {% csrf_token %}
 
     {{ form|bootstrap }}
@@ -17,4 +17,22 @@
 </form>
 
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+$("#id_Academia").change(function () {
+    var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_cities` view
+    var academiaId = $(this).val();  // get the selected country ID from the HTML input
+
+    $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+            'Academia': academiaId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+            $("#id_Professor").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+    });
+
+});
+</script>
 {% endblock %}
