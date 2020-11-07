@@ -22,7 +22,9 @@
 <script>
   $(document).ready(function() {
     if($('#id_ProfessorAluno').length){ // se for um professor, as funcoes abaixo serao executadas
-      var profvalue = $('#id_Professor').val(); // captura o valor inicial do professor
+      if($('#id_ProfessorAluno').is(":checked")){
+        var profvalue = $('#id_Professor').val(); // captura o valor inicial do professor
+      }
       function carrega_prof(){ //funcao para atualizar os professores dependendo da academia selecionada
         var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_professores` view
         var academiaId = $("#id_Academia").val();  // get the selected country ID from the HTML input
