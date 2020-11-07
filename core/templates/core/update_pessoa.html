@@ -8,7 +8,7 @@
 
 <h2>Pessoa: {{pessoa.Nome}}</h2>
 
-<form action="{% url 'core_update_pessoa' pessoa.RegistroCBJ  %}" method="POST" id="pessoaForm" data-professores-url="{% url 'ajax_load_professores' %}">
+<form action="{% url 'core_update_pessoa' pessoa.RegistroCBJ  %}" method="POST" id="pessoaForm" data-professores-url="{% url 'ajax_load_professores_update' %}">
     {% csrf_token %}
 
     {{ form|bootstrap }}
@@ -40,18 +40,20 @@
         setTimeout(function() {
           $("#id_Professor > option").each(function() { // se for um professor aluno, ele nao pode se selecionar como professor
             if($(this).text() ==  $("#id_Nome").val()){
-              $(this).hide(); // esconde para nao selecionar um auto professor
+              $(this).removeAttr('selected').hide(); // esconde para nao selecionar um auto professor
             } else{
-              $(this).attr("selected","selected"); // seleciona qualquer outro professor da academia para que sua auto selecao desapareca
+              $(this).show(); // seleciona qualquer outro professor da academia para que sua auto selecao desapareca
             }
           });
-          $('#id_Professor option[value='+profvalue+']').attr("selected","selected"); // se ja for um professor aluno, seleciona o professor inicial
-        },2000);
+          if(profvalue != ""){
+            $('#id_Professor option[value='+profvalue+']').attr("selected","selected"); // se ja for um professor aluno, seleciona o professor inicial
+          }
+        },200);
       };
 
 
       if($('#id_ProfessorAluno').is(":checked")){ // ao carregar a pagina, verifica se e um professor aluno
-        setTimeout(function(){carrega_prof()},4000); // aplica a funcao ao carregar a pagina
+        setTimeout(function(){carrega_prof()},200); // aplica a funcao ao carregar a pagina
       } else{
         $('#id_Professor').parent().parent().hide();
         $('#id_UltimaAnuidade').parent().parent().hide();
@@ -81,6 +83,7 @@
     
     
     else{ // se for um aluno, as funcoes abaixo serao carregadas
+      var profvalue = $('#id_Professor').val();
       function carrega_prof(){ // funcao para aplicar os filtros da academia selecionada ao professor
         var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_professores` view
         var academiaId = $("#id_Academia").val();  // get the selected academia ID from the HTML input
@@ -94,6 +97,17 @@
                 $("#id_Professor").html(data);  // replace the contents of the professor input with the data that came from the server
             }
         });
+
+        setTimeout(function() {
+          $("#id_Professor > option").each(function() { // se for um professor aluno, ele nao pode se selecionar como professor
+            if($(this).text() == "---------"){
+              $(this).removeAttr('selected').hide(); // esconde para nao selecionar um auto professor
+            } else{
+              $(this).show().attr("selected","selected"); // seleciona qualquer outro professor da academia para que sua auto selecao desapareca
+            }
+          });
+          $('#id_Professor option[value='+profvalue+']').attr("selected","selected");
+        },200);
       };
       setTimeout(function(){carrega_prof()},200); // aplica os filtros do professor ao carregar a pagina
 

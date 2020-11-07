@@ -105,6 +105,10 @@ def update_academia(request, IDAcademia):
     # else:
     return render(request, 'core/update_academia.html', data)
 
+def load_professores_update(request): #funcao para carregar os professores que trabalham na academia selecionada
+    Academia_id = request.GET.get('Academia')
+    professores = Professor.objects.filter(Academia_id=Academia_id).order_by('Nome')
+    return render(request, 'core/professor_dropdown_list_update.html', {'professores': professores})
 
 # -------------- DELETE --------------
 @login_required
