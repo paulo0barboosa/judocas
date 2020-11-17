@@ -15,7 +15,7 @@
 
     <button type="submit" class="btn btn-primary">Atualizar</button>
     <div class="btn-danger btn" role="alert"><a style="color: white" href="{% url 'core_delete_pessoa' pessoa.RegistroCBJ %}">Deletar</a></div>
-    <div class="btn-danger btn hide" role="alert" id="promove"><a style="color: white" href="{% url 'core_promove_filiado' pessoa.RegistroCBJ %}">Promover a professor</a></div>
+    <div class="btn-danger btn" style="display: none!important" role="alert" id="promove"><a style="color: white" href="{% url 'core_promove_filiado' pessoa.RegistroCBJ %}">Promover a professor</a></div>
 </form>
 <br>
 
