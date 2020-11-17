@@ -145,3 +145,40 @@ def list_filiacao(request):
     data['professors'] = professors
 
     return render(request, 'core/list_carteira_filiacao.html', data)
+    
+# -------------- PROMOVER FILIADO A PROFESSOR --------------
+def promove_filiado(request, RegistroCBJ):
+    filiado = Filiado.objects.get(RegistroCBJ=RegistroCBJ)
+
+    if request.method == 'POST':
+        promocao = Professor(**{ 
+            'Nome': filiado.Nome, 
+            'DataNascimento': filiado.DataNascimento, 
+            'CPF': filiado.CPF, 
+            'RGNumero': filiado.RGNumero, 
+            'RGOrgao': filiado.RGOrgao, 
+            'RegistroCBJ': filiado.RegistroCBJ, 
+            'Faixa': filiado.Faixa, 
+            'FaixaDataEntrega': filiado.FaixaDataEntrega, 
+            'CEP': filiado.CEP, 
+            'Rua': filiado.Rua, 
+            'Numero': filiado.Numero, 
+            'Complemento': filiado.Complemento, 
+            'Bairro': filiado.Bairro, 
+            'Estado': filiado.Estado, 
+            'Cidade': filiado.Cidade, 
+            'Telefone1': filiado.Telefone1, 
+            'Telefone2': filiado.Telefone2, 
+            'Observacoes': filiado.Observacoes, 
+            'DataCadastro': filiado.DataCadastro, 
+            'Academia': filiado.Academia, 
+            'Salario': 1000, 
+            'ProfessorAluno': True, 
+            'Professor': filiado.Professor, 
+            'UltimaAnuidade': filiado.UltimaAnuidade, 
+        }) 
+        filiado.delete()
+        promocao.save()
+        return redirect("search_pessoa")
+    # else:
+    return render(request, 'core/promove_filiado.html', {'filiado': filiado})
