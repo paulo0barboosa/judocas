@@ -13,7 +13,8 @@ from .views import (
     delete_academia,
     load_professores,
     load_professores_update,
-    list_filiacao
+    list_filiacao,
+    promove_filiado
 )
 
 
@@ -32,4 +33,5 @@ urlpatterns = [
     path('ajax/load_professores/', load_professores, name='ajax_load_professores'), # listagem de professores de acordo com a academia selecionada
     path('ajax/load_professores_update/', load_professores_update, name='ajax_load_professores_update'), # listagem de professores de acordo com a academia selecionada
     path('list_filiacao/', list_filiacao, name='core_list_filiacao'), # LISTAGEM DAS CARTEIRAS VENCIDAS
+    url(r'^promove_filiado/(?P<RegistroCBJ>\d+)/$', promove_filiado, name='core_promove_filiado'), # PROMOCAO DE FILIADO A PROFESSOR
 ]

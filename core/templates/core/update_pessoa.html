@@ -15,6 +15,7 @@
 
     <button type="submit" class="btn btn-primary">Atualizar</button>
     <div class="btn-danger btn" role="alert"><a style="color: white" href="{% url 'core_delete_pessoa' pessoa.RegistroCBJ %}">Deletar</a></div>
+    <div class="btn-danger btn hide" role="alert" id="promove"><a style="color: white" href="{% url 'core_promove_filiado' pessoa.RegistroCBJ %}">Promover a professor</a></div>
 </form>
 <br>
 
@@ -87,6 +88,7 @@
     
     else{ // se for um aluno, as funcoes abaixo serao carregadas
       var profvalue = $('#id_Professor').val();
+      $("#promove").show();
       function carrega_prof(){ // funcao para aplicar os filtros da academia selecionada ao professor
         var url = $("#pessoaForm").attr("data-professores-url");  // get the url of the `load_professores` view
         var academiaId = $("#id_Academia").val();  // get the selected academia ID from the HTML input
