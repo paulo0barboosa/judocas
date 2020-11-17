@@ -1,0 +1,77 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block main %}
+
+{% include 'core/menu.html' %}
+
+<h1>Resultado</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Nome</th>
+      <th scope="col">Última Anuidade</th>
+      <th scope="col">Registro CBJ</th>
+    </tr>
+  </thead>
+  <tbody id="pessoas">
+    {% for aluno in alunos %}
+        <tr>
+            <td><a href="{% url 'core_update_pessoa' aluno.RegistroCBJ %}">{{ aluno.Nome }}</a></td>
+            <td>{{ aluno.UltimaAnuidade }}</td>
+            <td>{{ aluno.RegistroCBJ }}</td>
+        </tr>
+    {% endfor %}
+    {% for professor in professors %}
+        <tr>
+            <td><a href="{% url 'core_update_pessoa' professor.RegistroCBJ %}">{{ professor.Nome }}</a></td>
+            <td>{{ professor.UltimaAnuidade }}</td>
+            <td>{{ professor.RegistroCBJ }}</td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script src="{% static "jquery.js" %}"></script>
+<script>
+  $(document).ready(function() {
+    
+    var today = new Date(); // pego a data de hoje
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = mm + '/' + dd + '/' + yyyy; // formata a data de hoje
+
+    var year_ago = new Date(yyyy - 1, mm - 1, dd); // pega a data de 1 ano atras
+
+    var year_ago_timestamp = year_ago.getTime() // transforma para timestamp
+
+    $('#pessoas tr').each(function() { // se a pessoa tiver o campo de ultima anuidade vazio, ele sera removido
+        $.each(this.cells, function(){
+            if($(this).text() == "None"){
+                $(this).parent().remove();
+            };
+        });
+    });
+
+    $('#pessoas tr').each(function() {
+        var td = 0 // variavel para pegar o numero da coluna
+        $.each(this.cells, function(){
+            td++;
+            if(td == 2){ // so trata a segunda coluna, referente a ultima anuidade
+                var date = $(this).text()
+                date = date.split("/");
+                var newDate = new Date( date[2], date[1] - 1, date[0]);
+                newDate = newDate.getTime() // transforma a data da coluna em timestamp
+               if(newDate > year_ago ){ // se o timestamp da coluna for maior que o timestamp de 1 ano atras, o filiado esta atualizado
+                    $(this).parent().remove(); // remove os filiados atualizados, so os desatualizados permanecerao
+               };
+            };
+        });
+    });
+
+  });
+</script>
+
+{% endblock %}

@@ -112,6 +112,8 @@ TIME_ZONE = 'America/Sao_Paulo'
 
 DATE_INPUT_FORMATS = ['%d/%m/%Y']
 
+DATE_FORMAT = "d/m/Y"
+
 USE_I18N = True
 
 USE_L10N = False

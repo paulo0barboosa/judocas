@@ -12,7 +12,8 @@ from .views import (
     delete_pessoa,
     delete_academia,
     load_professores,
-    load_professores_update
+    load_professores_update,
+    list_filiacao
 )
 
 
@@ -30,4 +31,5 @@ urlpatterns = [
     url(r'^delete_academia/(?P<IDAcademia>\d+)/$', delete_academia, name='core_delete_academia'), # DELETE
     path('ajax/load_professores/', load_professores, name='ajax_load_professores'), # listagem de professores de acordo com a academia selecionada
     path('ajax/load_professores_update/', load_professores_update, name='ajax_load_professores_update'), # listagem de professores de acordo com a academia selecionada
+    path('list_filiacao/', list_filiacao, name='core_list_filiacao'), # LISTAGEM DAS CARTEIRAS VENCIDAS
 ]
