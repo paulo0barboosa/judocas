@@ -133,3 +133,15 @@ def delete_academia(request, IDAcademia):
         return redirect("search_academia")
     # else:
     return render(request, 'core/delete_academia.html', {'academia': academia})
+
+# -------------- CARTEIRA FILIACAO --------------
+def list_filiacao(request):
+    data = {}
+
+    alunos = Filiado.objects.all()
+    professors = Professor.objects.all()
+
+    data['alunos'] = alunos
+    data['professors'] = professors
+
+    return render(request, 'core/list_carteira_filiacao.html', data)

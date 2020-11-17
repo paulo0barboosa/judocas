@@ -1,4 +1,5 @@
 {% extends 'core/base.html' %}
+{% load static %}
 {% load bootstrap %}
 
 {% block main %}
@@ -16,5 +17,7 @@
     <button type="submit" class="btn btn-primary">Cadastrar</button>
 </form>
 
+<script src="{% static "jquery.js" %}"></script>
+<script src="{% static "/javascript.js" %}"></script>
 
 {% endblock %}
